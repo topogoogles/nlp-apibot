@@ -1,20 +1,19 @@
 [tool.poetry]
 name = "nlp-apibot"
 version = "0.1.0"
-description = "This code uses the Google search API to retrieve search results, extracts the text corpus from the top search result's web page, and calculates cosine similarity to find the most relevant response. Using Python, NLTK, and the Requests module. The NLP application builds chatbots, allows retrieving data and gives better conversations with the users"
+description = "This project builds a custom chatbot corpus using Google Search API, HTML parsing, and NLP techniques for enhanced responses."
 authors = ["topogoogles <araujoagustin@gmail.com>"]
 readme = "README.md"
 packages = [{include = "nlp_apibot"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-"googlesearch.py" = "^1.6.1"
 requests = "^2.31.0"
+nltk = "^3.8.1"
+"googlesearch.py" = "^1.6.1"
 lxml = "^5.2.1"
 beautifulsoup4 = "^4.12.3"
-nltk = "^3.8.1"
 scikit-learn = "^1.4.2"
-tkinter-customwindow = "^0.1.0"
 
 
 [build-system]
