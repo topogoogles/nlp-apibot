@@ -20,13 +20,17 @@ poetry init
 
 This command will guide you through creating your `pyproject.toml` file, where you'll specify your project's dependencies and other configurations.
 
-### 3. Add Dependencies
+### 3. Check the Project's Environment
 
-You can add dependencies to your project by running:
+Poetry manages its own virtual environments. Ensure that you are working within the correct environment for your project. You can activate the project's environment by running
 
 ```bash
-poetry add <package-name>
+poetry shell
 ```
+
+### 4. Verify Dependencies
+
+Make sure that all the necessary dependencies are correctly added to your `pyproject.toml` file. You can add dependencies by running `poetry add <package_name>` for each package you need.
 
 For your project, you might need to add packages like `googlesearch`, `requests`, `lxml`, `beautifulsoup4`, `nltk`, `scikit-learn`, and `tkinter`. For example:
 
@@ -34,7 +38,9 @@ For your project, you might need to add packages like `googlesearch`, `requests`
 poetry add googlesearch requests lxml beautifulsoup4 nltk scikit-learn
 ```
 
-### 4. Build Your Application
+After adding dependencies, run `poetry install` to ensure they are installed in the project's environment.
+
+### 5. Build Your Application
 
 With Poetry, you can build your application by creating a distribution package. This is useful for deployment. Run:
 
@@ -44,40 +50,14 @@ poetry build
 
 This command will create a `.tar.gz` file in the `dist/` directory, which is your application's distribution package.
 
-### 5. Deploy Your Application
+## Troubleshooting Import Errors
 
-The deployment process can vary significantly depending on your target environment (e.g., a web server, a cloud service like AWS, Google Cloud, Heroku, etc.). Here's a general approach:
+- **Check for Conflicting Dependencies**: Sometimes, dependencies can conflict with each other, leading to import errors. You can check for dependency conflicts by running `poetry show --tree`. This command will display a tree of all installed packages and their dependencies. Look for any packages that might conflict with the ones you're trying to use.
 
-- **For a Web Server**: Upload the `.tar.gz` file to your server and extract it. Then, install the dependencies using `poetry install` and run your application.
+- **Ensure VSCode is Using the Correct Python Interpreter**: VSCode might be using a different Python interpreter than the one managed by Poetry. To ensure VSCode uses the correct interpreter, you can select it by clicking on the Python version in the bottom-left corner of the VSCode window or by using the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P` on macOS) and searching for "Python: Select Interpreter". Choose the interpreter that corresponds to your Poetry-managed environment.
 
-- **For Cloud Services**: You might need to create a Docker container for your application. Use the `.tar.gz` file as the base image and install dependencies using a `Dockerfile`. Then, deploy the container to your cloud service.
+- **Reload VSCode**: Sometimes, simply reloading VSCode can resolve import issues. You can do this by closing and reopening VSCode or by using the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P` on macOS) and searching for "Developer: Reload Window".
 
-### Example Dockerfile
+- **Check for Typos in Import Statements**: Although it might seem basic, ensure that there are no typos in your import statements. A common mistake is misspelling package names or module names.
 
-Here's a simple `Dockerfile` example to get you started:
-
-```Dockerfile
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the current directory contents into the container at /app
-COPY. /app
-
-# Install any needed packages specified in requirements.txt
-RUN pip install poetry && poetry install
-
-# Make port 80 available to the world outside this container
-EXPOSE 80
-
-# Run app.py when the container launches
-CMD ["python", "your_app.py"]
-```
-
-Replace `your_app.py` with the entry point of your application.
-
-### 6. Push to a Repository
-
-If you're deploying to a cloud service that supports Git (like Heroku), you can push your code to a Git repository and use the service's deployment features.
+- **Update Poetry**: If you're using an older version of Poetry, consider updating it to the latest version. Newer versions might have bug fixes or improvements that resolve your issue. You can update Poetry by running `poetry self update`.
